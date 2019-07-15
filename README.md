@@ -1,3 +1,5 @@
+(current folder ~/code/hbplus)
+
 Structure of this package
 =========================
 
