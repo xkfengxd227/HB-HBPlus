@@ -1,0 +1,1 @@
+mex -g -largeArrayDims -DFINTEGER=long -lmwblas -lmwlapack CFLAGS="\$CFLAGS -fPIC -msse4 -I.. -Wall -O3 -DHAVE_ARPACK" LDFLAGS="\$LDFLAGS  -lmwarpack" yael_eigs.c ../yael/eigs.c ../yael/vector.c ../yael/matrix.c ../yael/machinedeps.c ../yael/sorting.c ../yael/binheap.c -fopenmp;
