@@ -7,27 +7,30 @@
 
 typedef struct
 {
-    // 线下处理
+    // clustering parameters
 	int 				ncenter;		// number of cluster
-	int					niter;			// 聚类迭代次数
-	int					nthread;		// 处理器个数，聚类时用
-	int 				seed;			// 随即数相关
-	int 				nredo;			// kmeans执行次数（默认为1）
-	// 线下结果
-	float 			    *centroid;	    // 聚类中心
-	int                 *assign;        // the belonging cluster of each data
+	int					niter;			// number of iteration
+	int					nthread;		// number of thread
+	int 				seed;			// seed for random generation
+	int 				nredo;			// number of repetation of clustering progress (default 1)
+	
+	// clustering results
+	float 			    *centroid;	    // all centroid vectors
+	int                 *assign;        // belongingness to clusters of all data
 	int                 *nassign;       // number of members in each cluster
-	int 				**member;		// 数据点对聚类的归属
+	int 				**member;		// members of each cluster
 
-	DoubleIndex         **innerLB;      // 每一个聚类中数据点的最小边界距离
+	DoubleIndex         **innerLB;      // inner lowerbounds for members of each cluster
 } Clustering;
 
-/// 聚类初始化
+/// initlize a clustering
 void C_Init(Clustering *c);
-/// 聚类删除数据
+/// clear clustering results
 void C_Delete(Clustering *c);
-/// 进行聚类
+/// clustering
 void C_Clustering(Clustering *c, fDataSet *ds, fDataSet *lds);
-/// 计算聚类汇总所有数据到边界的最小距离，排序
+/// in each cluster, calculate the inner lower bounds of its member points, sort them in 
+/// ascending order according to their inner lb
 void C_InnerLBDistance(Clustering *c, fDataSet *ds);
+
 #endif // CLUSTERING_H
