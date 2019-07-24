@@ -41,13 +41,17 @@ float inner_product(float *a, float *b, int d)
     }
     return rslt;
 }
-// 析出数据点对各个聚类的归属, and calculate the minimum distance between each member and the bound
+
 void extract_members(int *assign, int *nassign, int **member, int n, int ncenter)
 {
 	int i;
 	int *pos = ivec_new_0(ncenter);
 
+<<<<<<< HEAD
+	// allocate space for members
+=======
 	// 分配空间 
+>>>>>>> 9ed0fe81266b866a6d3e8e70e3fe73f03af9d5d3
 	int total = 0;
 	for(i = 0; i < ncenter; i++)
 	{
@@ -57,19 +61,19 @@ void extract_members(int *assign, int *nassign, int **member, int n, int ncenter
 	}
 	printf("total: %d\n", total);
 
-	// 提取出属于每一个聚类的数据点ID
+	// extract members
 	int icenter = -1;
 	for(i = 0; i < n; i++)
 	{
-		// 第i个数据点属于第icenter个聚类
-		icenter = assign[i];
-		// 第icenter个聚类添加第i个数据点ID到icenter目前的列表末尾
+		
+		icenter = assign[i];        // the i-th point belongs to the icenter-th cluster
 		member[icenter][pos[icenter]] = i;
-		// 第icenter个聚类的位置+1
+                                    // add a new member to the icenter-th cluster
+		
 		pos[icenter] ++;
 	}
 
-	// 验证提取后每个聚类的成员个数与之前结果的匹配性，并打印分配结果
+	/// print clustering results into file for verifying
 	FILE *fp = fopen("member.txt", "w");
 	int j;
 	for(i = 0; i < ncenter; i++)
@@ -85,6 +89,7 @@ void extract_members(int *assign, int *nassign, int **member, int n, int ncenter
 
 	free(pos); pos = NULL;
 }
+
 // compare two float number, return true when a > b
 int f_bigger(float a, float b)
 {
@@ -120,7 +125,7 @@ void DI_Merge(DoubleIndex *di, int l, int m, int r)
 {
 	int i;
     ///
-    /// 计算左右长度
+    /// lengths of the left part and the right part
     ///
     int llen = m - l + 1;
     int rlen = r - m;
@@ -128,7 +133,7 @@ void DI_Merge(DoubleIndex *di, int l, int m, int r)
     DoubleIndex *rlb = (DoubleIndex*)malloc(sizeof(DoubleIndex) * (rlen+1));
 
     ///
-    /// 将左右边数据读出来，存储来，利于排序
+    /// extract data in both the left part and right part for ease of sorting
     ///
     for (i = 0; i < llen; i++)
     {
@@ -139,7 +144,7 @@ void DI_Merge(DoubleIndex *di, int l, int m, int r)
     	memcpy(&rlb[i], &di[m + 1 + i], sizeof(DoubleIndex));
     }
     ///
-    /// 在左右分组的末尾添加一个“极大值”用作本分组结束的标志，2*PI
+    /// add a maximum value to the end of both the left and right part as an ending flag
     ///
     llb[llen].id = llen + 1;
     llb[llen].val = FLOAT_MAX;
@@ -151,7 +156,7 @@ void DI_Merge(DoubleIndex *di, int l, int m, int r)
         k = 0;
     for (i = l; i <= r; i++)
     {
-        if (f_bigger(rlb[ri].val, llb[li].val))                                            //左边较小
+        if (f_bigger(rlb[ri].val, llb[li].val))     // left part is smaller than the right part
         {
         	memcpy(&di[l+k], &llb[li], sizeof(DoubleIndex));
             li++;
