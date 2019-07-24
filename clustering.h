@@ -7,27 +7,27 @@
 
 typedef struct
 {
-    // ÏßÏÂ´¦Àí
-	int 				ncenter;		// ¾ÛÀàÖĞĞÄ
-	int					niter;			// ¾ÛÀàµü´ú´ÎÊı
-	int					nthread;		// ´¦ÀíÆ÷¸öÊı£¬¾ÛÀàÊ±ÓÃ
-	int 				seed;			// Ëæ¼´ÊıÏà¹Ø
-	int 				nredo;			// kmeansÖ´ĞĞ´ÎÊı£¨Ä¬ÈÏÎª1£©
-	// ÏßÏÂ½á¹û
-	float 			    *centroid;	    // ¾ÛÀàÖĞĞÄ
+    // çº¿ä¸‹å¤„ç†
+	int 				ncenter;		// number of cluster
+	int					niter;			// èšç±»è¿­ä»£æ¬¡æ•°
+	int					nthread;		// å¤„ç†å™¨ä¸ªæ•°ï¼Œèšç±»æ—¶ç”¨
+	int 				seed;			// éšå³æ•°ç›¸å…³
+	int 				nredo;			// kmeansæ‰§è¡Œæ¬¡æ•°ï¼ˆé»˜è®¤ä¸º1ï¼‰
+	// çº¿ä¸‹ç»“æœ
+	float 			    *centroid;	    // èšç±»ä¸­å¿ƒ
 	int                 *assign;        // the belonging cluster of each data
 	int                 *nassign;       // number of members in each cluster
-	int 				**member;		// Êı¾İµã¶Ô¾ÛÀàµÄ¹éÊô
+	int 				**member;		// æ•°æ®ç‚¹å¯¹èšç±»çš„å½’å±
 
-	DoubleIndex         **innerLB;      // Ã¿Ò»¸ö¾ÛÀàÖĞÊı¾İµãµÄ×îĞ¡±ß½ç¾àÀë
+	DoubleIndex         **innerLB;      // æ¯ä¸€ä¸ªèšç±»ä¸­æ•°æ®ç‚¹çš„æœ€å°è¾¹ç•Œè·ç¦»
 } Clustering;
 
-/// ¾ÛÀà³õÊ¼»¯
+/// èšç±»åˆå§‹åŒ–
 void C_Init(Clustering *c);
-/// ¾ÛÀàÉ¾³ıÊı¾İ
+/// èšç±»åˆ é™¤æ•°æ®
 void C_Delete(Clustering *c);
-/// ½øĞĞ¾ÛÀà
+/// è¿›è¡Œèšç±»
 void C_Clustering(Clustering *c, fDataSet *ds, fDataSet *lds);
-/// ¼ÆËã¾ÛÀà»ã×ÜËùÓĞÊı¾İµ½±ß½çµÄ×îĞ¡¾àÀë£¬ÅÅĞò
+/// è®¡ç®—èšç±»æ±‡æ€»æ‰€æœ‰æ•°æ®åˆ°è¾¹ç•Œçš„æœ€å°è·ç¦»ï¼Œæ’åº
 void C_InnerLBDistance(Clustering *c, fDataSet *ds);
 #endif // CLUSTERING_H
