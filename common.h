@@ -7,25 +7,26 @@
 #include <stdio.h>
 #include <sys/time.h>
 
-#define     INT_MAX 0x7FFFFFFF                  // max signed integer
-#define     FLOAT_MAX 9999999999.0            // max float
-#define     FLOAT_ZERO  1e-16                    // zero for float
-#define     SHAKERANGE  10                   // in case the result knn not at the same position with groundtruth
-#define     PAGESIZE    4096                // page size: 4K
-#define     PAGE_RAN_SE 10               // 10 sequence pages equal 1 random page
+#define     INT_MAX 0x7FFFFFFF			// max signed integer
+#define     FLOAT_MAX 9999999999.0 		// max float
+#define     FLOAT_ZERO  1e-16 			// zero for float
+#define     SHAKERANGE  10        		// in case the result knn not at the same position with groundtruth
+#define     PAGESIZE    4096  			// page size: 4K
+#define     PAGE_RAN_SE 10           	// 10 sequence pages equal 1 random page
 
 #define     INDEX_PARA "index.para"
 #define     CLUSTER_POXFIX ".cluster"
 
 typedef enum{false, true} bool;
-// 浮点型的数据集
+// dataset of float type
 typedef struct
 {
-	int 				n;					// 数据点个数
-	int 				d;					// 数据集维数
-	float				*data;			// 数据
+	int 				n;				// cardinality of the dataset
+	int 				d;				// dimensionality of the dataset
+	float				*data;			// data vectors
 } fDataSet;
-// a int-double pair
+
+// an Index-Value pair: index is int type, value is double type
 typedef struct
 {
     int                 id;             // index
@@ -40,22 +41,20 @@ float odistance_square(const float *a, const float *b, int d);
 float odistance(const float *a, const float *b, int d);
 // inner product for two vectors
 float inner_product(float *a, float *b, int d);
-// 析出数据点对各个聚类的归属, and calculate the minimum distance between each member and the bound
+// extract belongingness and members of the clusters, 
+// and calculate the inner lowerbound distances in each cluster
 void extract_members(int *assign, int *nassign, int **member, int n, int ncenter);
 // compare two float number, return true when a > b
 int f_bigger(float a, float b);
 // open file with given format
 FILE *open_file(char *filename, char *format);
-/// <summary>
-/// 归并排序：将DoubleIndex对按照double从小到大排序
-/// </summary>
-/// <param name="di">原始DoubleIndex对</param>
-/// <param name="l">起始索引</param>
-/// <param name="r">终止索引（包括）</param>
+
+/// MergeSort: sort DoubleIndex type data in ascending order according to their values
+///
+/// @param		di 		datas to be sort
+/// @param 		l 		begin position
+/// @param 		r 		ending position(including)
 void DI_MergeSort(DoubleIndex *di, int l, int r);
-/// <summary>
-/// 保持顺序的情况下，合并左右两边
-/// </summary>
 void DI_Merge(DoubleIndex *di, int l, int m, int r);
 /** load groundtruth from file
  *	format: 
