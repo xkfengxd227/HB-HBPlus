@@ -47,7 +47,7 @@ void extract_members(int *assign, int *nassign, int **member, int n, int ncenter
 	int i;
 	int *pos = ivec_new_0(ncenter);
 
-	// 分配空间
+	// 分配空间 
 	int total = 0;
 	for(i = 0; i < ncenter; i++)
 	{
