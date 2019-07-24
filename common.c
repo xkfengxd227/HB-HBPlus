@@ -47,11 +47,8 @@ void extract_members(int *assign, int *nassign, int **member, int n, int ncenter
 	int i;
 	int *pos = ivec_new_0(ncenter);
 
-<<<<<<< HEAD
+
 	// allocate space for members
-=======
-	// 分配空间 
->>>>>>> 9ed0fe81266b866a6d3e8e70e3fe73f03af9d5d3
 	int total = 0;
 	for(i = 0; i < ncenter; i++)
 	{
@@ -112,9 +109,9 @@ FILE *open_file(char *filename, char *format)
 void DI_MergeSort(DoubleIndex *di, int l, int r)
 {
 	int m;
-    if (l < r)                                                                                                          //继续划分
+    if (l < r) 					//继续划分
     {
-        m = (l + r) / 2;                                                                                            //中间位置
+	m = (l + r) / 2;                                                                                            //中间位置
         DI_MergeSort(di, l, m);                                                                                     //归并排序左半边
         DI_MergeSort(di, m + 1, r);                                                                                 //归并排序右半边
         DI_Merge(di, l, m, r);                                                                                      //合并两边
